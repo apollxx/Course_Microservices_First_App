@@ -1,21 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-
+import React from 'react'
 
 function CommentList({comments}){
- /*    const [postComments, setPostComments] = useState([])
-
-    useEffect(() => {
-        fetchComments()
-    }, [])
-
-    async function fetchComments(){
-        const res = await axios.get(`http://localhost:4001/posts/${postId}/comments`);
-        setPostComments(res.data);
-    } */
 
     function renderComments(){
-        return <ul>{comments.map(c => <li key={c.id}>{c.content}</li>)}</ul>
+        return <ul>{comments.map(c => <li key={c.id}>{moderateComment(c)}</li>)}</ul>
+    }
+
+    function moderateComment(c){
+        if(c.status === "aproved") return c.content;
+        if(c.status === "rejected") return <b>"Blocked Comment (violation of the rules -#1234)"</b>;
+        if(c.status === "pending") return "Comment Awaiting Moderation";
     }
 
     return (
